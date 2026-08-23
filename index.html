@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paint Palette for UI</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Mixbox: subtractive pigment mixing (CC BY-NC 4.0). Global `mixbox`. -->
+    <script src="vendor/mixbox.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Paint Palette <span>for UI</span></h1>
+      <p>Mix color like paint. Pick it. Drop it onto type.</p>
+    </header>
+
+    <main class="app">
+      <section class="pane palette-pane">
+        <div class="tray-block">
+          <h2>Pigments</h2>
+          <div id="pigment-tray" class="tray"></div>
+        </div>
+        <div class="tray-block">
+          <h2>Modifiers <small>dab in warmth / coolness</small></h2>
+          <div id="modifier-tray" class="tray tray-mods"></div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="palette-canvas"></canvas>
+        </div>
+
+        <div class="palette-tools">
+          <button id="smudge-btn" class="tool">🖐 Smudge</button>
+          <button id="pick-btn" class="tool">💧 Eyedropper</button>
+          <button id="undo-btn" class="tool">↶ Undo</button>
+          <button id="clear-btn" class="tool">🗑 New surface</button>
+          <label class="brush-size">
+            Brush
+            <input id="brush-size" type="range" min="8" max="70" value="26" />
+          </label>
+          <div class="picked">
+            <span id="picked-swatch" class="swatch-lg"></span>
+            <span id="picked-hex" class="picked-hex">—</span>
+          </div>
+        </div>
+        <p class="hint">
+          Load a pigment, then paint on the surface. Drag one color through
+          another to smear a smooth mix · dab a modifier to feather in warmth or
+          coolness · eyedropper to pick, then click a role to apply · Ctrl/Cmd+Z
+          to undo.
+        </p>
+      </section>
+
+      <section class="pane preview-pane">
+        <div id="preview"></div>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

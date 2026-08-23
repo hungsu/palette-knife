@@ -1,0 +1,232 @@
+:root {
+  --ink: #1c1c20;
+  --muted: #6b6b73;
+  --line: #e6e3dc;
+  --bg: #f3f1ec;
+  --panel: #fffefb;
+  --radius: 14px;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.app-header {
+  padding: 18px 26px 6px;
+}
+.app-header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.app-header h1 span { color: var(--muted); font-weight: 500; }
+.app-header p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(420px, 1.1fr);
+  gap: 18px;
+  padding: 14px 26px 26px;
+  align-items: start;
+}
+
+.pane {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.tray-block h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 6px 0 8px;
+}
+.tray-block h2 small { text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+.tray { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.tray-mods { gap: 12px; }
+
+.pigment {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.pigment:hover { transform: scale(1.06); }
+.pigment.selected {
+  box-shadow: 0 0 0 3px var(--ink);
+  border-color: var(--panel);
+}
+.pigment-label {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tray-mods { margin-bottom: 26px; }
+
+.canvas-wrap {
+  height: 340px;
+  border-radius: 12px;
+  /* Mid neutral-gray palette surface (not white) so mixed colour reads truer,
+     with a faint grain to read as a physical surface. Base colour matches PAPER
+     in palette.js so eyedropper compositing stays accurate. */
+  background-color: #8a8a86;
+  /* Pure-CSS mottled/streaked texture (no SVG filter, renders everywhere):
+     a coarse diagonal streak layer plus two soft blotches for uneven tone. */
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    ),
+    radial-gradient(circle at 25% 30%, rgba(0, 0, 0, 0.09), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(255, 255, 255, 0.07), transparent 45%);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  touch-action: none;
+}
+#palette-canvas { cursor: cell; }
+#palette-canvas { width: 100%; height: 100%; display: block; }
+
+.palette-tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+}
+.tool {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.tool.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.brush-size {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted);
+}
+.brush-size input { width: 90px; }
+
+.picked { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.swatch-lg {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: repeating-conic-gradient(#ddd 0 25%, #fff 0 50%) 0/12px 12px;
+}
+.picked-hex { font-family: ui-monospace, monospace; font-size: 13px; }
+
+.hint { color: var(--muted); font-size: 12px; margin: 12px 0 0; line-height: 1.5; }
+
+/* preview: data-viz chart */
+.chart-block {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  margin-bottom: 16px;
+  background: #fcfcfb;
+}
+.chart-head { margin-bottom: 6px; }
+.chart-title { margin: 0; font-size: 15px; letter-spacing: -0.01em; color: var(--ink); }
+.chart-sub { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+.chart-figure { position: relative; }
+.chart-svg { width: 100%; height: auto; display: block; }
+.chart-hot { cursor: crosshair; }
+.chart-tooltip {
+  position: absolute;
+  top: 8px;
+  pointer-events: none;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  padding: 8px 10px;
+  font-size: 12px;
+  min-width: 138px;
+  z-index: 2;
+}
+.chart-tooltip .tt-title { font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+.chart-tooltip .tt-row {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--muted); line-height: 1.5;
+}
+.chart-tooltip .tt-row b { margin-left: auto; color: var(--ink); font-variant-numeric: tabular-nums; }
+.chart-tooltip .tt-dot { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+
+.series-legend {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+}
+.series {
+  display: flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); background: #fff;
+  border-radius: 999px; padding: 5px 10px 5px 6px; cursor: pointer;
+  font-size: 12px; color: var(--ink);
+}
+.series:hover { border-color: var(--ink); }
+.series .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.15); }
+.series-name { font-weight: 500; }
+.series-hex { font-family: ui-monospace, monospace; color: var(--muted); }
+
+/* preview */
+.preview-mock {
+  border-radius: 12px;
+  padding: 22px;
+  transition: background 0.15s ease;
+}
+.mock-card {
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: background 0.15s ease;
+}
+.mock-card h1 { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.02em; }
+.mock-card .lede { font-size: 16px; }
+.mock-card p { line-height: 1.6; margin: 0 0 14px; }
+.mock-card a { text-decoration: underline; }
+.mock-btn {
+  border: none; border-radius: 10px; padding: 10px 16px;
+  font-size: 14px; cursor: pointer; font-weight: 600;
+}
+
+.roles { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+.role {
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid var(--line); background: #fff;
+  border-radius: 10px; padding: 8px 10px; cursor: pointer;
+  text-align: left; font-size: 13px;
+}
+.role:hover { border-color: var(--ink); }
+.swatch { width: 22px; height: 22px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.15); }
+.role-name { min-width: 96px; }
+.role-hex { font-family: ui-monospace, monospace; color: var(--muted); min-width: 72px; }
+.metric {
+  font-size: 11px; padding: 2px 7px; border-radius: 999px;
+  font-family: ui-monospace, monospace;
+}
+.metric.good { background: #d8f3df; color: #1b6b34; }
+.metric.ok   { background: #fdf0cf; color: #86620a; }
+.metric.fail { background: #fbdad6; color: #a02218; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+}
