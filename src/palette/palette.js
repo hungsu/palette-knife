@@ -68,15 +68,20 @@ export class Palette {
     this.brush.kind = "paint";
     this.brush.load = 0.6;
     this.brush.pickup = 0.09;
+    this.brush.track = 0; // paint keeps its loaded pigment; no surface tracking
     this.mode = "paint";
   }
 
-  // Smudge: no fresh pigment. Strong pickup + gentle deposit drags whatever is
-  // already on the surface, blending two painted colors without adding a third.
+  // Smudge: no fresh pigment. Drags existing paint and continuously blends with
+  // it. `track` is a steady colour-mixing floor: even when the brush is fully
+  // loaded it keeps pulling in the colour it's currently over, so a smear MIXES
+  // into the paint it crosses rather than overruling it with the source colour.
+  // Deposit (`load`) is gentle so the surface keeps some of its own colour.
   setSmudge() {
     this.brush.kind = "smudge";
-    this.brush.load = 0.5;
+    this.brush.load = 0.32;
     this.brush.pickup = 0.5;
+    this.brush.track = 0.4;
     this.mode = "paint";
   }
 
@@ -157,13 +162,20 @@ export class Palette {
     // carried colour toward the picked-up colour in proportion to how much paint
     // is being added vs already held: an empty brush (carriedA≈0) fully adopts
     // the colour instead of averaging with leftover [0,0,0] (which looked black).
+    const track = this.brush.track || 0;
     const center = this.pixelRaw(cx, cy);
     if (center.a > 0) {
-      const k = pickup * (center.a / 255);
+      const localFrac = center.a / 255;
+      const k = pickup * localFrac;
       const added = (255 - this._carriedA) * k;
       const newA = this._carriedA + added;
+      // Colour blend fraction: `added/newA` fully adopts colour when the brush is
+      // empty (avoids the black-from-[0,0,0] artifact); the `track` floor keeps a
+      // loaded brush mixing toward the surface so smudge blends instead of
+      // overruling. Coverage (newA) is tracked separately for the no-op/taper.
       const frac = newA > 0 ? added / newA : 0;
-      this._carried = mixbox.lerp(this._carried, center.rgb, frac);
+      const colourFrac = Math.max(frac, track * localFrac);
+      this._carried = mixbox.lerp(this._carried, center.rgb, colourFrac);
       this._carriedA = newA;
     }
     const carriedFrac = this._carriedA / 255;
