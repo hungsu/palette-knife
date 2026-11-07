@@ -109,7 +109,7 @@ export function chartSVG(state) {
 
   return `
     <svg viewBox="0 0 ${W} ${H}" class="chart-svg" role="img"
-         aria-label="Stacked area chart of sessions by channel over twelve months">
+         aria-label="Stacked area chart of credit usage by category over twelve months">
       <rect x="0" y="0" width="${W}" height="${H}" fill="${SURFACE}" rx="8"/>
       ${grid.join("")}
       ${fills}
@@ -147,7 +147,7 @@ export function tooltipFor(state, i) {
     .reverse()
     .join("");
   const total = DATA[i].reduce((a, b) => a + b, 0);
-  return `<div class="tt-title">${MONTHS[i]} · ${total}k sessions</div>${rows}`;
+  return `<div class="tt-title">${MONTHS[i]} · ${total}k credits</div>${rows}`;
 }
 
 export const chartGeom = { x: L.x, top: M.top, bottom: M.top + IH, months: MONTHS.length };

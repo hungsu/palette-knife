@@ -1,38 +1,60 @@
 // App state: the currently picked color and the color assigned to each UI role.
+//
+// Roles are a shared, template-agnostic semantic palette; every preview template
+// draws from these same ids. Defaults are Snowflake's brand colours so the preview
+// opens "Snowflake-flavoured" and the exercise becomes re-mixing their set.
 
 export const ROLES = [
   { id: "bg", name: "Background", kind: "surface" },
   { id: "surface", name: "Surface", kind: "surface" },
+  { id: "surfaceAlt", name: "Surface alt", kind: "surface" },
+  { id: "border", name: "Border", kind: "line" },
   { id: "heading", name: "Heading", kind: "text" },
   { id: "body", name: "Body text", kind: "text" },
-  { id: "accent", name: "Accent / link", kind: "text" },
+  { id: "muted", name: "Muted text", kind: "text" },
+  { id: "primary", name: "Primary", kind: "fill" },
+  { id: "onPrimary", name: "On primary", kind: "text" },
+  { id: "success", name: "Success", kind: "fill" },
+  { id: "warning", name: "Warning", kind: "fill" },
+  { id: "danger", name: "Danger", kind: "fill" },
+  { id: "heroBg", name: "Hero background", kind: "surface" },
 ];
 
+// Snowflake brand palette (snowflake.com/brand-guidelines):
+// Snowflake Blue #29B5E8, Mid Blue #11567F, Winter #24323D, Windy City #8A999E,
+// Valencia Orange #FF9F36, First Light #D45B90.
 const DEFAULTS = {
-  bg: [250, 249, 246],
-  surface: [255, 255, 255],
-  heading: [30, 30, 34],
-  body: [70, 70, 78],
-  accent: [40, 90, 200],
+  bg: [245, 250, 252], //   #f5fafc  cool near-white
+  surface: [255, 255, 255], // #ffffff
+  surfaceAlt: [238, 244, 248], // #eef4f8  subtle panel / input fill
+  border: [213, 222, 227], //   #d5dee3  windy-city tint
+  heading: [17, 86, 127], //    #11567f  Mid Blue
+  body: [36, 50, 61], //        #24323d  Winter
+  muted: [138, 153, 158], //    #8a999e  Windy City
+  primary: [41, 181, 232], //   #29b5e8  Snowflake Blue
+  onPrimary: [255, 255, 255], //#ffffff
+  success: [24, 160, 120], //   #18a078  Snowflake-toned green
+  warning: [255, 159, 54], //   #ff9f36  Valencia Orange
+  danger: [196, 59, 107], //    #c43b6b  First-Light-derived red-pink
+  heroBg: [0, 41, 54], //       #002936  Iceberg-toned dark brand surface
 };
 
-// Categorical series for the data-viz preview. Defaults are the dataviz skill's
-// validated categorical palette (slots 1-5), so the chart starts colour-correct
-// and the tool's job is to re-mix these into a client's own harmonious set.
+// Categorical series for the dashboard chart. Defaults are Snowflake's secondary
+// palette — a ready-made categorical set. Names read like Snowsight usage buckets.
 export const SERIES = [
-  { id: "s0", name: "Direct" },
-  { id: "s1", name: "Organic" },
-  { id: "s2", name: "Referral" },
-  { id: "s3", name: "Social" },
-  { id: "s4", name: "Email" },
+  { id: "s0", name: "Compute" },
+  { id: "s1", name: "Storage" },
+  { id: "s2", name: "Cloud Services" },
+  { id: "s3", name: "Serverless" },
+  { id: "s4", name: "Data Transfer" },
 ];
 
 const SERIES_DEFAULTS = {
-  s0: [42, 120, 214], // blue   #2a78d6
-  s1: [235, 104, 52], // orange #eb6834
-  s2: [27, 175, 122], // aqua   #1baf7a
-  s3: [237, 161, 0], //  yellow #eda100
-  s4: [232, 123, 164], // magenta #e87ba4
+  s0: [41, 181, 232], //  #29b5e8  Snowflake Blue
+  s1: [255, 159, 54], //  #ff9f36  Valencia Orange
+  s2: [113, 221, 220], // #71d3dc  Star Blue
+  s3: [125, 68, 207], //  #7d44cf  Purple Moon
+  s4: [212, 91, 144], //  #d45b90  First Light
 };
 
 export class State {

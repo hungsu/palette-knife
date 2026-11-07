@@ -11,13 +11,9 @@
   <body>
     <main class="app">
       <section class="pane palette-pane">
-        <div class="tray-block">
-          <h2>Pigments</h2>
-          <div id="pigment-tray" class="tray"></div>
-        </div>
-        <div class="tray-block">
-          <h2>Modifiers <small>dab in warmth / coolness</small></h2>
-          <div id="modifier-tray" class="tray tray-mods"></div>
+        <div class="tray-tabs" id="tray-tabs">
+          <div class="tray-tablist" role="tablist" aria-label="Colour collections" id="tray-tablist"></div>
+          <div class="tray-panels" id="tray-panels"></div>
         </div>
 
         <div class="canvas-wrap">

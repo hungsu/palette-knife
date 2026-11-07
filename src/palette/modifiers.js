@@ -20,6 +20,15 @@ export const MODIFIER_PIGMENTS = [
   { id: "white", name: "Lighten", rgb: [243, 243, 243] },
   { id: "black", name: "Darken", rgb: [30, 30, 30] },
   { id: "mute", name: "Mute", rgb: [120, 110, 100] }, // gray-brown complement
+  { id: "warm-highlight", name: "Warm Highlight", rgb: [255, 228, 190] }, // sunlight: Lighten + Warmth
+  { id: "cool-highlight", name: "Cool Highlight", rgb: [215, 230, 240] }, // moonlight: Lighten + Coolness, heavily diluted
+];
+
+// Ordered collections rendered as tabs. Add a new collection here (with its
+// own pigment array) to add a new tab — no markup/JS changes needed.
+export const PIGMENT_COLLECTIONS = [
+  { id: "pigments", label: "Pigments", hint: null, pigments: STARTER_PIGMENTS, isModifier: false },
+  { id: "modifiers", label: "Modifiers", hint: "dab in warmth / coolness", pigments: MODIFIER_PIGMENTS, isModifier: true },
 ];
 
 export function pigmentById(id) {
